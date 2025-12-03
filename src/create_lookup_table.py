@@ -4,7 +4,7 @@ import pandas as pd
 
 def create_lookup_table(path_to_fish_image='../data/fish_image'):
 
-    # path needs to be relative to your cwd bcs idk htf python does absolute path lmao
+    # path needs to be relative to your cwd bcs idk htf python does relative path lmao
     id_pattern = r'(\d+)(?=\.png)'
     trajectory_pattern =  r'\d+'
     df = pd.DataFrame()
@@ -12,7 +12,7 @@ def create_lookup_table(path_to_fish_image='../data/fish_image'):
     images = list()
     fish_ids = list()
     trajectory_ids = list()
-    absolute_paths = list()
+    relative_path = list()
     for fish_id in os.listdir(path_to_fish_image):
         for image in os.listdir(f'{path_to_fish_image}/{fish_id}'):
             uuid = re.search(id_pattern, image)
@@ -21,10 +21,13 @@ def create_lookup_table(path_to_fish_image='../data/fish_image'):
             ids.append(uuid.group(1))
             images.append(image)
             trajectory_ids.append(trajectory.group(0))
-            absolute_paths.append(f'{path_to_fish_image}/{fish_id}/{image}')
+            relative_path.append(f'{path_to_fish_image}/{fish_id}/{image}')
     df.index = ids
     df.loc[:,'image_name'] = images
     df.loc[:,'label'] = fish_ids
     df.loc[:,'trajectory'] = trajectory_ids
-    df.loc[:,'relative_path'] = absolute_paths
+    df.loc[:,'relative_path'] = relative_path
     return df
+
+if __name__ == '__main__':
+    create_lookup_table().to_csv('../data/fish_lookup_table.csv')

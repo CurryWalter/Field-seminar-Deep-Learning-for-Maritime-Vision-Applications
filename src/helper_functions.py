@@ -9,7 +9,7 @@ def match_name_to_label(image_name):
     return None
 
 def match_name_to_trajectory(image_name):
-    # input: image name output: label
+    # input: image name output: trajectory
     df = create_lookup_table()
     for _, row in df.iterrows():
         if row['image_name'] == image_name:
