@@ -24,7 +24,7 @@ def create_lookup_table(path_to_fish_image='../data/fish_image'):
             absolute_paths.append(f'{path_to_fish_image}/{fish_id}/{image}')
     df.index = ids
     df.loc[:,'image_name'] = images
-    df.loc[:,'lable'] = fish_ids
+    df.loc[:,'label'] = fish_ids
     df.loc[:,'trajectory'] = trajectory_ids
     df.loc[:,'relative_path'] = absolute_paths
     return df
