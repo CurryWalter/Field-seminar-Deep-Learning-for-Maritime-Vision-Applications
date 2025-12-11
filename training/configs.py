@@ -1,4 +1,5 @@
 import torch
+import os
 from torch.nn import CrossEntropyLoss
 from torch.optim import AdamW
 from torchvision.transforms import v2
@@ -39,3 +40,7 @@ class ResNetTrainingConfig:
             'image_size': self.image_size,
             'transforms': self.transforms
         }
+
+    def get_save_path(self, path_to_models_dir):
+        path = os.path.join(path_to_models_dir, f"ResNet50_{self.run_name}")
+        return path

@@ -22,6 +22,10 @@ def main():
     img_dir_val = '../splits/baseline/validation'
     annotation_file = '../data/fish_lookup_table.csv'
 
+    # path for model save
+    model_path = "../models/ResNet50/"
+
+
     train_dataset = FishyDataset(img_dir_train, annotation_file, train_config.transforms)
     train_dataloader = DataLoader(train_dataset, batch_size=train_config.batch_size, shuffle=True)
 
@@ -37,6 +41,9 @@ def main():
         # put model on device
         model.to(device)
 
+        # for validation
+        best_accuracy = 0
+
         for i in range(train_config.base_epochs):
             print(f"Epoch {i+1}/{train_config.base_epochs}")
 
@@ -46,8 +53,8 @@ def main():
             accuracy, val_loss = validate(model, train_config.loss_fn, val_dataloader, device)
             mlflow.log_metrics({'val_accuracy': accuracy, 'val_loss': val_loss}, step=i)
 
-
-
+            if best_accuracy < accuracy:
+                torch.save(model.state_dict(), train_config.get_save_path(model_path))
 
 
 
