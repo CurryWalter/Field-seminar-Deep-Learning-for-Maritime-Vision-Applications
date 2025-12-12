@@ -4,7 +4,8 @@ from preprocessing.create_lookup_table import create_lookup_table
 from preprocessing.create_splits_baseline import write_data_to_dir, create_train_test_val_splits
 from preprocessing.create_splits_no_traj_overlap import create_train_test_val_splits_traj_overlap, write_data_to_dir_traj_overlap
 
-if __name__ == "__main__":
+
+def main():
     df = create_lookup_table()
 
 
@@ -17,3 +18,7 @@ if __name__ == "__main__":
     df.loc[:,'traj_split'] = new.loc[:, 'traj_split']
 
     df.to_csv('../data/lookup_table.csv')
+
+
+if __name__ == "__main__":
+    main()
