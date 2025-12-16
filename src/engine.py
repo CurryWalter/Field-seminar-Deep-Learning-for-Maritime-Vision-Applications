@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+from tqdm import tqdm
 from sklearn.metrics import balanced_accuracy_score
 
 
@@ -18,7 +19,7 @@ def train_one_epoch(model, loss_fn, optimizer, dataloader, device):
     # set model mode to train
     model.train()
 
-    for imgs, labels in dataloader:
+    for imgs, labels in tqdm(dataloader):
         # bring image to gpu if available
         imgs = imgs.to(device)
         labels = labels.to(device)
